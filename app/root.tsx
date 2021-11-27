@@ -6,7 +6,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch
+  useCatch,
+  useLoaderData
 } from "remix";
 import type { LinksFunction } from "remix";
 import { H } from 'highlight.run';
@@ -24,6 +25,12 @@ export let links: LinksFunction = () => {
     }
   ];
 };
+
+export function loader() {
+  return {
+    HIGHLIGHT_ID: process.env.HIGHLIGHT_ID
+  }
+}
 
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
@@ -119,16 +126,18 @@ function Document({
         {children}
         <ScrollRestoration />
         <Scripts />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        {process?.env?.NODE_ENV === "development" && <LiveReload />}
       </body>
     </html>
   );
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
+  let data = useLoaderData<{ HIGHLIGHT_ID?: string }>();
+
   useEffect(() => {
-    H.init(process.env.HIGHLIGHT_ID, {
-      environment: 'production',
+    H.init(data?.HIGHLIGHT_ID, {
+      environment: process?.env?.NODE_ENV === 'development' ? 'development' : 'production',
       enableStrictPrivacy: false,
     });
   }, []);
