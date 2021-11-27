@@ -11,10 +11,10 @@ import {
 } from "remix";
 import type { LinksFunction } from "remix";
 import { H } from 'highlight.run';
-
 import globalStylesUrl from "~/styles/global.css";
 import darkStylesUrl from "~/styles/dark.css";
 import { useEffect } from "react";
+import GithubIcon from "./shared/icons/github";
 // https://remix.run/api/app#links
 export let links: LinksFunction = () => {
   return [
@@ -158,7 +158,9 @@ function Layout({ children }: { children: React.ReactNode }) {
               <li>
                 <a href="#" aria-disabled>Posts</a>
               </li>
-              
+              <li>
+                <a href="https://github.com/shpetimselaci/shpetimsblog" target="_blank" className="icon-link">{GithubIcon}</a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -168,7 +170,8 @@ function Layout({ children }: { children: React.ReactNode }) {
       </main>
       <footer className="footer">
         <div className="container footer-content">
-          <p>&copy; Shpëtim Selaci, built with <a href="https://remix.run" target="_blank">Remix</a>.</p>
+          <p>&copy; Shpëtim Selaci, built with <a href="https://remix.run" target="_blank">Remix</a>.</p> <br/>
+          
         </div>
       </footer>
     </div>

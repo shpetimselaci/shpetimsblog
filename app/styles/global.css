@@ -167,3 +167,10 @@ hr {
   justify-content: center;
   align-items: center;
 }
+
+
+.icon-link > svg {
+  fill: var(--color-links);
+  height: 24px;
+  width: 24px;
+}
