@@ -26,9 +26,12 @@ export let links: LinksFunction = () => {
   ];
 };
 
+
+type RootData = { HIGHLIGHT_ID?: string, NODE_ENV: string }
 export function loader() {
   return {
-    HIGHLIGHT_ID: process.env.HIGHLIGHT_ID
+    HIGHLIGHT_ID: process.env.HIGHLIGHT_ID,
+    NODE_ENV: process.env.NODE_ENV
   }
 }
 
@@ -44,7 +47,6 @@ export default function App() {
   );
 }
 
-// https://remix.run/docs/en/v1/api/conventions#errorboundary
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
   return (
@@ -106,6 +108,7 @@ function Document({
   children: React.ReactNode;
   title?: string;
 }) {
+  let data = useLoaderData<RootData>();
   return (
     <html lang="en">
       <head>
@@ -126,18 +129,18 @@ function Document({
         {children}
         <ScrollRestoration />
         <Scripts />
-        {process?.env?.NODE_ENV === "development" && <LiveReload />}
+        {data?.NODE_ENV === "development" && <LiveReload />}
       </body>
     </html>
   );
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
-  let data = useLoaderData<{ HIGHLIGHT_ID?: string }>();
+  let data = useLoaderData<RootData>();
 
   useEffect(() => {
     H.init(data?.HIGHLIGHT_ID, {
-      environment: process?.env?.NODE_ENV === 'development' ? 'development' : 'production',
+      environment: data.NODE_ENV === 'development' ? 'development' : 'production',
       enableStrictPrivacy: false,
     });
   }, []);
