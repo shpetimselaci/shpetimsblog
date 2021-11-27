@@ -30,8 +30,8 @@ export let links: LinksFunction = () => {
 type RootData = { HIGHLIGHT_ID?: string, NODE_ENV: string }
 export function loader() {
   return {
-    HIGHLIGHT_ID: process.env.HIGHLIGHT_ID,
-    NODE_ENV: process.env.NODE_ENV
+    HIGHLIGHT_ID: process?.env?.HIGHLIGHT_ID,
+    NODE_ENV: process?.env?.NODE_ENV
   }
 }
 
@@ -108,7 +108,6 @@ function Document({
   children: React.ReactNode;
   title?: string;
 }) {
-  let data = useLoaderData<RootData>();
   return (
     <html lang="en">
       <head>
@@ -129,7 +128,7 @@ function Document({
         {children}
         <ScrollRestoration />
         <Scripts />
-        {data?.NODE_ENV === "development" && <LiveReload />}
+        {/* {process.env?.NODE_ENV === "development" && <LiveReload />} */}
       </body>
     </html>
   );
