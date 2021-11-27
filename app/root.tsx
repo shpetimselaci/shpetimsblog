@@ -9,9 +9,11 @@ import {
   useCatch
 } from "remix";
 import type { LinksFunction } from "remix";
+import { H } from 'highlight.run';
 
 import globalStylesUrl from "~/styles/global.css";
 import darkStylesUrl from "~/styles/dark.css";
+import { useEffect } from "react";
 // https://remix.run/api/app#links
 export let links: LinksFunction = () => {
   return [
@@ -19,7 +21,6 @@ export let links: LinksFunction = () => {
     {
       rel: "stylesheet",
       href: darkStylesUrl,
-      media: "(prefers-color-scheme: dark)"
     }
   ];
 };
@@ -125,6 +126,12 @@ function Document({
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    H.init(process.env.HIGHLIGHT_ID, {
+      environment: 'production',
+      enableStrictPrivacy: false,
+    });
+  }, []);
   return (
     <div className="app">
       <header className="header">
